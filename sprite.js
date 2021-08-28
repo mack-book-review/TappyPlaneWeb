@@ -151,11 +151,9 @@ class Sprite{
 
 		drawImage(context,timeDiff){
 			
-			console.log("drawImage...");
 
 			if(this.currentAnimation == null){
 
-				console.log("no current animation:  drawImage...");
 
 				context.drawImage(
 				this.img,
@@ -165,7 +163,6 @@ class Sprite{
 				this.width,this.height);
 
 			} else {
-				console.log("has current animation:  drawImage...");
 
 				//run current animation
 				var currentAnimation = this.currentAnimation;
@@ -196,7 +193,6 @@ class Sprite{
 					currentAnimation.resetCurrentFrame();
 						
 				} else {
-					console.log("Removing animation");
 					delete this.currentAnimation;
 					this.currentAnimation = null;
 					this.isDead = true;

@@ -8,7 +8,23 @@
              var fullPath = basePath + i + ".png";
              imgPaths.push(fullPath);
          }
+
+
          return imgPaths;
+     }
+
+     static GetBeeTextureImgPaths(){
+         var p1 = "assets/Bee/bee-fly.png";
+         var p2 = "assets/Bee/bee.png";
+
+         return [p1,p2];
+     }
+
+      static GetBatTextureImgPaths(){
+         var p1 = "assets/Bat/bat-fly.png";
+         var p2 = "assets/Bat/bat.png";
+
+         return [p1,p2];
      }
 
      static GetEvilSunTextureImgPaths(){
@@ -57,6 +73,16 @@
          
             return imgArray;
 
+     }
+
+      static GetBatTextures(){
+         var imgPaths = Animation.GetBatTextureImgPaths();
+         return Animation.GetTextures(imgPaths);
+     }
+
+      static GetBeeTextures(){
+         var imgPaths = Animation.GetBeeTextureImgPaths();
+         return Animation.GetTextures(imgPaths);
      }
 
      static GetTappyPlaneTextures(color){

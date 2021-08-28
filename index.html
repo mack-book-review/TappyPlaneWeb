@@ -13,9 +13,16 @@
 <style>
 	#game-container{
 		display:  block;
-		width: "640px";
-		height: "480px";
-		background-color:  none;
+		width:  "640px";
+		height:  "480px";
+		padding: 0;
+		background-color:  pink;
+	}
+
+	#game-screen{
+		margin:  0;
+		border: solid 2px black;
+	
 	}
 
 	.game-layer{
@@ -28,16 +35,19 @@
 </style>
 <body>
 
-	<div id="game-container" width="640" height="480">
-		<canvas id="game-screen">
+	<div id="game-container">
+		<canvas id="game-screen" width="640px" height="480px">
 			
 		</canvas>
 	</div>
 	<script src="animation.js"></script>
 	<script src="sprite.js"></script>
 	<script src="plane.js"></script>
+	<script src="bee.js"></script>	
+	<script src="bat.js"></script>
 	<script src="basescene.js"></script>
 	<script src="scene.js"></script>
+	<script src="inputhelper.js"></script>
 	<script src="game.js"></script>
 	<script>
 		var scene = new Scene("game-screen");
