@@ -20,18 +20,39 @@
 	}
 
 	#game-screen{
+		position:  absolute;
 		margin:  0;
 		border: solid 2px black;
 	
 	}
 
 	.game-layer{
-		position: absolute;
-		width:  100%;
-		height:  100%;
-		margin: 0;
-		padding:  0;
+		
 	}
+
+	#hud{
+		position:  absolute;
+		display:  inline-block;
+		top:  "30px";
+		left: "20px";
+		width: "1080px";
+		height: "50px";
+		font-size: 2em;
+		color:  purple;
+		font-family: "Baskerville";
+
+	}
+
+	#hud #health-display{
+
+	}
+
+	#hud #score-display{
+		position:  absolute;
+		right:  "0px";
+	}
+
+
 </style>
 <body>
 
@@ -39,6 +60,11 @@
 		<canvas id="game-screen" width="640px" height="480px">
 			
 		</canvas>
+
+		<div class="game-layer" id="hud">
+			<span id="health-display">Health:</span>
+			<span id="score-display">Score:</span>
+		</div>
 	</div>
 	<script src="animation.js"></script>
 	<script src="sprite.js"></script>
@@ -57,7 +83,7 @@
 	<script src="inputhelper.js"></script>
 	<script src="game.js"></script>
 	<script>
-		var scene = new Scene("game-screen");
+		var scene = new Scene("game-container","game-screen");
 		var game = new Game(scene);
 		game.start();
 	</script>

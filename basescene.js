@@ -1,6 +1,7 @@
 class BaseScene{
 
-	constructor(game_screen_id){
+	constructor(container_id, game_screen_id){
+		this.container = document.getElementById(container_id);
 		this.canvas = document.getElementById(game_screen_id);
 		this.context = this.canvas.getContext('2d');
 

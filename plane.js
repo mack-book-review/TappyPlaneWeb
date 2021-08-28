@@ -13,6 +13,7 @@ class Plane extends Sprite{
 
 		this.velocityX = 0;
 		this.velocityY = 0;
+		this.health = 10;
 	}
 
 

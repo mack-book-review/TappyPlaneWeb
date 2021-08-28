@@ -5,6 +5,7 @@ class Game{
     this.scene = scene;
 
 
+
   }
 
   start(){
@@ -23,6 +24,7 @@ class Game{
               const elapsed = timestamp - previousTimeStamp;
 
               scene.clearCanvas();
+              scene.update(elapsed);
               scene.updateAnimations(elapsed);
               scene.updatePhysics(elapsed);
            }

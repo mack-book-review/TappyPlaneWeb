@@ -1,7 +1,12 @@
 class Scene extends BaseScene{
 
-	constructor(game_screen_id){
-		super(game_screen_id);
+	constructor(container_id,game_screen_id){
+		super(container_id,game_screen_id);
+
+		this.healthDisplay = this.container.querySelector("#health-display");
+		this.scoreDisplay = this.container.querySelector("#score-display");
+		
+		this.score = 0;
 
 		this.player = new Plane("Yellow",50,50);
 		//this.background = new Background();
@@ -26,6 +31,24 @@ class Scene extends BaseScene{
 		this.mouseDownY = 0;
 
 		InputHelper.ConfigureCanvasMouseControls(this);
+	}
+
+	updatePlayerHealth(timeDiff){
+		this.healthDisplay.removeChild(this.healthDisplay.childNodes[0]);
+		this.healthDisplay.appendChild(document.createTextNode("Health: " + this.player.health));
+
+	}
+	updateScore(timeDiff){
+		this.scoreDisplay.removeChild(this.scoreDisplay.childNodes[0]);
+
+		this.scoreDisplay.appendChild(document.createTextNode("Score: " + this.score));
+	}
+
+	update(timeDiff){
+		super.update(timeDiff);
+		this.updatePlayerHealth(timeDiff);
+		this.updateScore(timeDiff);
+
 	}
 
 	drawBackgrounds(timeDiff){
@@ -153,6 +176,7 @@ class Scene extends BaseScene{
 
 		if(s1 instanceof Plane && s2 instanceof Enemy){
 			console.log("Collision with enemy!");
+			this.player.health -= 1;
 		}
 
 		
