@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="">
+</head>
+
+<style>
+	#game-container{
+		display:  block;
+		width: 20em;
+		height: 20em;
+		transform:  rotateX(45deg);
+	}
+
+	.game-layer{
+		position: absolute;
+		width:  100%;
+		height:  100%;
+		margin: 0;
+		padding:  0;
+		background-color:  grey;
+	}
+</style>
+<body>
+
+	<div id="game-container" width="640" height="480">
+		<canvas class="game-layer" id="game-screen">
+			
+		</canvas>
+	</div>
+	<script src="basescene.js"></script>
+	<script src="game.js"></script>
+	<script>
+		var scene = new BaseScene("game-screen");
+		var game = new Game(scene);
+		console.log(game);
+		console.log(game.start);
+		game.start();
+	</script>
+</body>
+</html>
