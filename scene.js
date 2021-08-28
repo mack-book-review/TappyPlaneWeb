@@ -9,22 +9,12 @@ class Scene extends BaseScene{
 		this.score = 0;
 
 		this.player = new Plane("Yellow",50,50);
-		//this.background = new Background();
 		this.backgroundManager = new BackgroundManager(this.context);
+		this.enemyManager = new EnemyManager(this.context);
+		this.coinManager = new CollectibleManager(this.context);
+	
 
-		this.enemies = [
-			new Bee(500,50),
-			new Bee(400,200),
-			new Bat(300,400),
-			new Bat(100,100),
-			new Bomb(350),
-			new Bomb(200),
-			new Bomb(500)
-		];
-
-		
 		this.barriers = [];
-		this.collectibles = [];
 
 		this.mouseDown = false;
 		this.mouseDownX = 0;
@@ -56,20 +46,15 @@ class Scene extends BaseScene{
 	}
 
 	drawEnemies(timeDiff){
-		var scene = this;
-		this.iterateEnemies(function(enemy){
-			enemy.drawImage(scene.context,timeDiff);
-		});
+		this.enemyManager.drawSprites(timeDiff);
 	}
-
-	
 
 	drawBarriers(timeDiff){
 
 	}
 
-	drawCollectibles(timeDiff){
-
+	drawCoins(timeDiff){
+		this.coinManager.drawSprites(timeDiff);
 	}
 
 	drawPlayer(timeDiff){
@@ -77,31 +62,28 @@ class Scene extends BaseScene{
 
 	}
 
-	// drawBackground(timeDiff){
-	// 	this.background.drawImage(this.context,timeDiff);
-	// }
-
-	updateBackgroundManagerPhysics(timeDiff){
+	updateBackgroundPhysics(timeDiff){
 		this.backgroundManager.updatePhysics(timeDiff);
 	}
 
-
 	updateEnemyPhysics(timeDiff){
-		var scene = this;
-		this.iterateEnemies(function(enemy){
-			enemy.updatePhysics(timeDiff);
-
-
-		});
+		this.enemyManager.updatePhysics(timeDiff);
 	}
+
+	updateCoinPhysics(timeDiff){
+		this.coinManager.updatePhysics(timeDiff);
+	}
+
+
 
 	updatePhysics(timeDiff){
 		super.updatePhysics(timeDiff);
 
 		this.performCollisionCheck();
 
-		this.updateBackgroundManagerPhysics(timeDiff);
+		this.updateBackgroundPhysics(timeDiff);
 		this.updateEnemyPhysics(timeDiff);
+		this.updateCoinPhysics(timeDiff);
 
 		if(this.mouseDown){
 			this.player.processClick(this.mouseDownX,this.mouseDownY);
@@ -118,7 +100,7 @@ class Scene extends BaseScene{
 		super.updateAnimations(timeDiff);
 
 		this.drawBackgrounds(timeDiff);
-		this.drawCollectibles(timeDiff);
+		this.drawCoins(timeDiff);
 		this.drawEnemies(timeDiff);
 		this.drawBarriers(timeDiff);
 		this.drawPlayer(timeDiff);
@@ -139,18 +121,12 @@ class Scene extends BaseScene{
 			});
 	}
 
-	iterateEnemies(callback){
-		this.enemies.forEach(function(enemy){
-			callback(enemy)
-		});
-	}
-
 
 
 	performCollisionCheck(){
 		var scene = this;
 
-		this.iterateEnemies(function(enemy){
+		this.enemyManager.iterateSprites(function(enemy){
 			scene.checkCollision(scene.player,enemy);
 		});
 

@@ -1,11 +1,32 @@
  
  class Animation{
 
+
+
      static GetTappyPlaneTextureImgPaths(color = "Blue"){
          var basePath = "assets/Planes/plane" + color;
          var imgPaths = [];
          for(var i = 1; i < 4; i++){
              var fullPath = basePath + i + ".png";
+             imgPaths.push(fullPath);
+         }
+
+
+         return imgPaths;
+     }
+
+
+    static GetCoinTextureImgPaths(color){
+         var basePath = "assets/Coins/" + color;
+         var imgPaths = [];
+         
+         for(var i = 1; i < 4; i++){
+             var fullPath = basePath + "_" + i + ".png";
+             imgPaths.push(fullPath);
+         }
+
+         for(var i = 3; i > 0; i--){
+             var fullPath = basePath + "_" + i + ".png";
              imgPaths.push(fullPath);
          }
 
@@ -107,6 +128,22 @@
          var imgPaths = Animation.GetExplosionTextureImgPaths();
 
          return Animation.GetTextures(imgPaths);
+     }
+
+
+     static GetCoinTextures(color){
+         var imgPaths = Animation.GetCoinTextureImgPaths(color);
+
+         return Animation.GetTextures(imgPaths);
+     }
+
+
+
+      static GetCoinTurningAnimation(color){
+
+         var anim = new Animation(Animation.GetCoinTextures(color),true);
+         anim.frameInterval = 300;
+         return anim;
      }
 
      static GetEvilSunTurningAnimation(){
