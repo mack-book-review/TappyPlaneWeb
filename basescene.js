@@ -98,15 +98,7 @@ class BaseScene{
 		}
 	}
 
-	processCollision(s1,s2){
-
-	}
-
-	checkCollision(s1,s2){
-		if(s1.overlapsWith(s2)){
-			processCollision(s1,s2);
-		}
-	}
+	
 
 	/** Trigger Custom Events for Game Win or Game Loss **/
 	generatePlayerHitEvent(){

@@ -1,4 +1,4 @@
-class Bat extends Sprite{
+class Bat extends Enemy{
 
 	constructor(x,y){
 

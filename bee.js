@@ -1,4 +1,4 @@
-class Bee extends Sprite{
+class Bee extends Enemy{
 
 	constructor(x,y){
 

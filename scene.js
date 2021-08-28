@@ -57,6 +57,8 @@ class Scene extends BaseScene{
 	updatePhysics(timeDiff){
 		super.updatePhysics(timeDiff);
 
+		this.performCollisionCheck();
+
 		this.updateEnemyPhysics(timeDiff);
 
 		if(this.mouseDown){
@@ -70,7 +72,6 @@ class Scene extends BaseScene{
 	}
 
 	updateAnimations(timeDiff){
-		console.log("Scene: updating animations...");
 
 		super.updateAnimations(timeDiff);
 
@@ -104,9 +105,9 @@ class Scene extends BaseScene{
 	performCollisionCheck(){
 		var scene = this;
 
-		// this.iterateEnemies(function(enemy){
-		// 	scene.checkCollision(scene.player,enemy);
-		// });
+		this.iterateEnemies(function(enemy){
+			scene.checkCollision(scene.player,enemy);
+		});
 
 		// this.iterateCollectibles(function(collectible){
 		// 	scene.checkCollision(scene.player,collectible);
@@ -118,11 +119,24 @@ class Scene extends BaseScene{
 	
 	}
 
-	processCollision(s1,s2){
-		super.processCollision(s1,s2);
 
-		//process collision with enemy
-		//********player's health goes down
+
+	checkCollision(s1,s2){
+		if(s1.hasOverlapWith(s2)){
+			this.processCollision(s1,s2);
+		}
+	}
+
+	processCollision(s1,s2){
+
+		if(s1 instanceof Plane && s2 instanceof Enemy){
+			console.log("Collision with enemy!");
+		}
+
+		
+		if(s1 instanceof Plane && s2 instanceof Coin){
+			console.log("Collision with coin!");
+		}
 
 		//process collision with collectible
 		//********player's health increases, temporary invulnerability
