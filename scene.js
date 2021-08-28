@@ -4,15 +4,19 @@ class Scene extends BaseScene{
 		super(game_screen_id);
 
 		this.player = new Plane("Yellow",50,50);
+		//this.background = new Background();
+		this.backgroundManager = new BackgroundManager(this.context);
 
 		this.enemies = [
 			new Bee(500,50),
 			new Bee(400,200),
 			new Bat(300,400),
-			new Bat(100,100)
+			new Bat(100,100),
+			new Bomb(350),
+			new Bomb(200),
+			new Bomb(500)
 		];
 
-		this.npcs = [];
 		
 		this.barriers = [];
 		this.collectibles = [];
@@ -24,6 +28,9 @@ class Scene extends BaseScene{
 		InputHelper.ConfigureCanvasMouseControls(this);
 	}
 
+	drawBackgrounds(timeDiff){
+		this.backgroundManager.drawBackgrounds(timeDiff);
+	}
 
 	drawEnemies(timeDiff){
 		var scene = this;
@@ -31,6 +38,8 @@ class Scene extends BaseScene{
 			enemy.drawImage(scene.context,timeDiff);
 		});
 	}
+
+	
 
 	drawBarriers(timeDiff){
 
@@ -44,6 +53,15 @@ class Scene extends BaseScene{
 		this.player.drawImage(this.context,timeDiff);
 
 	}
+
+	// drawBackground(timeDiff){
+	// 	this.background.drawImage(this.context,timeDiff);
+	// }
+
+	updateBackgroundManagerPhysics(timeDiff){
+		this.backgroundManager.updatePhysics(timeDiff);
+	}
+
 
 	updateEnemyPhysics(timeDiff){
 		var scene = this;
@@ -59,6 +77,7 @@ class Scene extends BaseScene{
 
 		this.performCollisionCheck();
 
+		this.updateBackgroundManagerPhysics(timeDiff);
 		this.updateEnemyPhysics(timeDiff);
 
 		if(this.mouseDown){
@@ -75,6 +94,7 @@ class Scene extends BaseScene{
 
 		super.updateAnimations(timeDiff);
 
+		this.drawBackgrounds(timeDiff);
 		this.drawCollectibles(timeDiff);
 		this.drawEnemies(timeDiff);
 		this.drawBarriers(timeDiff);
@@ -101,6 +121,8 @@ class Scene extends BaseScene{
 			callback(enemy)
 		});
 	}
+
+
 
 	performCollisionCheck(){
 		var scene = this;
