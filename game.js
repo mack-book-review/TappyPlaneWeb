@@ -3,6 +3,8 @@ class Game{
 
   constructor(scene){
     this.scene = scene;
+
+
   }
 
   start(){
@@ -12,26 +14,31 @@ class Game{
        function run(timestamp) {
           if (start === undefined){
             start = timestamp;
+            previousTimeStamp = start;
           }
 
-           const elapsed = timestamp - start;
-          console.log(elapsed);
+
            if (previousTimeStamp !== timestamp) {
             // Math.min() is used here to make sure the element stops at exactly 200px
+              const elapsed = timestamp - previousTimeStamp;
+
               scene.clearCanvas();
-              scene.updateAnimations();
-              scene.updatePhysics();
+              scene.updateAnimations(elapsed);
+              scene.updatePhysics(elapsed);
            }
 
 
+           //scene.performCollisionCheck();
            scene.checkForGameWinOrLoss();
 
     
-            previousTimeStamp = timestamp
-
+            
+          
+            previousTimeStamp = timestamp;
             if(scene.isPaused || scene.isLost || scene.isWon){
                 console.log("Game stopped");
             } else {
+
 
                window.requestAnimationFrame(run);
 

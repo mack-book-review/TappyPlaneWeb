@@ -3,8 +3,6 @@ class BaseScene{
 	constructor(game_screen_id){
 		this.canvas = document.getElementById(game_screen_id);
 		this.context = this.canvas.getContext('2d');
-		this.x = 0;
-		this.y = 0;
 
 		//Initialize game states
 		this.isPaused = false;
@@ -38,23 +36,14 @@ class BaseScene{
 			});
 
 
-			this.container.addEventListener("gamelost", 
+			this.canvas.addEventListener("gamelost", 
 				function(){
 					scene.isLost = true;
 	
 			});
 
 
-			this.container.addEventListener("hudupdate", function(event){
-				
-			
-
-			});
-
-			this.container.addEventListener("playerupdate", function(event){
-				
-				
-			});
+		
 
 		}
 
@@ -66,24 +55,20 @@ class BaseScene{
 		this.context.clearRect(0,0,640,480);
 	}
 
-	drawText(someText){
+	drawText(someText,x,y){
 		this.context.font = '48px Caesar Dressing';
-  		this.context.fillText(someText, this.x, this.y);
+  		this.context.fillText(someText,x,y);
 	}
 
-	updateAnimations(){
-		console.log("Updating animations...");
+	updateAnimations(timeDiff){
 		this.drawText("Hello world!")
 ;	}
 
-	updatePhysics(){
-		console.log("Updating physics...");
-		this.x += 0.1;
-		this.y += 0.1;
+	updatePhysics(timeDiff){
+		
 	}
 
-	update(){
-		console.log("Updating other...");
+	update(timeDiff){
 	
 	}
 
@@ -113,7 +98,27 @@ class BaseScene{
 		}
 	}
 
+	processCollision(s1,s2){
+
+	}
+
+	checkCollision(s1,s2){
+		if(s1.overlapsWith(s2)){
+			processCollision(s1,s2);
+		}
+	}
+
 	/** Trigger Custom Events for Game Win or Game Loss **/
+	generatePlayerHitEvent(){
+		const event = new CustomEvent('player-hit',{bubbles:true});
+		this.canvasElement.dispatchEvent(event);
+	}
+
+	generateCollectibleEvent(){
+		const event = new CustomEvent('collectible-gained',{bubbles:true});
+		this.canvasElement.dispatchEvent(event);
+	}
+
 	generateGameWinEvent(){
 		const event = new CustomEvent('gamewon',{bubbles:true});
 		this.canvasElement.dispatchEvent(event);

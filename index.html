@@ -13,9 +13,9 @@
 <style>
 	#game-container{
 		display:  block;
-		width: 20em;
-		height: 20em;
-		transform:  rotateX(45deg);
+		width: "640px";
+		height: "480px";
+		background-color:  none;
 	}
 
 	.game-layer{
@@ -24,23 +24,24 @@
 		height:  100%;
 		margin: 0;
 		padding:  0;
-		background-color:  grey;
 	}
 </style>
 <body>
 
 	<div id="game-container" width="640" height="480">
-		<canvas class="game-layer" id="game-screen">
+		<canvas id="game-screen">
 			
 		</canvas>
 	</div>
+	<script src="animation.js"></script>
+	<script src="sprite.js"></script>
+	<script src="plane.js"></script>
 	<script src="basescene.js"></script>
+	<script src="scene.js"></script>
 	<script src="game.js"></script>
 	<script>
-		var scene = new BaseScene("game-screen");
+		var scene = new Scene("game-screen");
 		var game = new Game(scene);
-		console.log(game);
-		console.log(game.start);
 		game.start();
 	</script>
 </body>
