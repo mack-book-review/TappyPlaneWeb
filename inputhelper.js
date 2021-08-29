@@ -11,11 +11,7 @@ class InputHelper{
 				var x = event.clientX;
 				var y = event.clientY;
 
-				console.log("x: " + x);
-				console.log("y: " + y);
-
-				console.log("playerX: " + scene.player.x);
-				console.log("playerY: " + scene.player.y);
+			
 
 				scene.mouseDown = true; 
 				scene.mouseDownX = x;
@@ -26,7 +22,6 @@ class InputHelper{
 			scene.canvas.addEventListener("mouseup", function(event){
 
 				event.preventDefault();
-				console.log(event);
 				
 				scene.mouseDown = false; 
 			

@@ -1,5 +1,7 @@
 class Coin extends Sprite{
 
+	static CoinIdentifier = 0;
+
 	constructor(color,x,y){
 		
 		var imgPath =  "assets/Coins/" + color +"_1.png";
@@ -10,6 +12,8 @@ class Coin extends Sprite{
 
 		this.velocityX = -10;
 		this.value = 1;
+		this.identifier = Coin.CoinIdentifier;
+		Coin.CoinIdentifier += 1;
 	}
 
 

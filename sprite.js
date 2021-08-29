@@ -1,5 +1,7 @@
 class Sprite{
 
+	static SpriteIdentifier = 0; 
+	
 		constructor(imgSrc = null,x = null,
 			y = null,
 			width = null,
@@ -25,6 +27,8 @@ class Sprite{
 			//Configure health and dead/alive status
 			this.health = 1;
 			this.isDead = false;
+			this.identifier = Sprite.SpriteIdentifier;
+			Sprite.SpriteIdentifier += 1;
 
 			
 			;

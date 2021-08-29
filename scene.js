@@ -31,7 +31,7 @@ class Scene extends BaseScene{
 	updateScore(timeDiff){
 		this.scoreDisplay.removeChild(this.scoreDisplay.childNodes[0]);
 
-		this.scoreDisplay.appendChild(document.createTextNode("Score: " + this.score));
+		this.scoreDisplay.appendChild(document.createTextNode(this.score));
 	}
 
 	update(timeDiff){
@@ -41,6 +41,7 @@ class Scene extends BaseScene{
 
 	}
 
+	/** DRAW FUNCTIONS - CALLED IN updateAnimations **/
 	drawBackgrounds(timeDiff){
 		this.backgroundManager.drawBackgrounds(timeDiff);
 	}
@@ -61,6 +62,8 @@ class Scene extends BaseScene{
 		this.player.drawImage(this.context,timeDiff);
 
 	}
+
+	/** updatePhysics functions **/
 
 	updateBackgroundPhysics(timeDiff){
 		this.backgroundManager.updatePhysics(timeDiff);
@@ -130,6 +133,10 @@ class Scene extends BaseScene{
 			scene.checkCollision(scene.player,enemy);
 		});
 
+		this.coinManager.iterateSprites(function(coin){
+			scene.checkCollision(scene.player,coin);
+		});
+
 		// this.iterateCollectibles(function(collectible){
 		// 	scene.checkCollision(scene.player,collectible);
 		// });
@@ -150,14 +157,24 @@ class Scene extends BaseScene{
 
 	processCollision(s1,s2){
 
-		if(s1 instanceof Plane && s2 instanceof Enemy){
+		if(s1 instanceof Plane && s2 instanceof Enemy && !this.player.enemyContactTimer.timerOn){
 			console.log("Collision with enemy!");
 			this.player.health -= 1;
-		}
+			this.player.enemyContactTimer.timerOn = true;
+			
+		} 
 
 		
-		if(s1 instanceof Plane && s2 instanceof Coin){
+		if(s1 instanceof Plane && s2 instanceof Coin && !this.player.coinContactTimer.timerOne){
 			console.log("Collision with coin!");
+			this.player.coinValue += s2.value;
+			console.log("Coin Value: " + this.player.coinValue);
+			this.player.coinContactTimer.timerOn = true;
+			//remove the coin
+				//assign each coin a unique identifier upon instantion
+				//use filter function to identify coin in array and get index
+				//use the coinManager to remove the coin
+			this.coinManager.removeSprite(s2);
 		}
 
 		//process collision with collectible

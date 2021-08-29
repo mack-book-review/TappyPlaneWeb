@@ -66,7 +66,6 @@ class BackgroundManager{
 
 
 	updatePhysics(timeDiff){
-		console.log("BG Manager: updating physics of bgs");
 		//When the first element in the backgrounds array goes too far
 		//off-screen, push it to the end of the array
 		if(this.backgrounds[0].x < -this.backgrounds[0].width){

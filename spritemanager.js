@@ -29,4 +29,16 @@ class SpriteManager{
 			s.drawImage(manager.context,timeDiff);
 		});
 	}
+
+	removeSprite(identifier){
+		var targetIndex = null;
+		
+		this.sprites.forEach(function(val,index){
+			if(val.identifier == identifier){
+				targetIndex = index;
+			}
+		});
+
+		this.sprites.splice(targetIndex,1);
+	}
 }

@@ -14,6 +14,14 @@ class Plane extends Sprite{
 		this.velocityX = 0;
 		this.velocityY = 0;
 		this.health = 10;
+		this.coinValue = 0;
+
+		this.enemyContactTimer = new Timer();
+		this.coinContactTimer = new Timer();
+		this.enemyContactTimer.timeInterval = 2000;
+		// this.hasEnemyContact = false;
+		// this.enemyContactInterval = 500;
+		// this.enemyContactTimer = 0;
 	}
 
 
@@ -39,6 +47,22 @@ class Plane extends Sprite{
 	updatePhysics(timeDiff){
 
 		super.updatePhysics(timeDiff);
+
+		this.enemyContactTimer.runTimer(timeDiff);
+		this.coinContactTimer.runTimer(timeDiff);
+
+		// if(this.hasEnemyContact){
+		// 	console.log("Player is in contact...");
+
+		// 	this.enemyContactTimer += timeDiff;
+		// 	console.log("Contact time: " + this.contactTimer);
+
+		// 	if(this.enemyContactTimer > this.enemyContactInterval){
+		// 		console.log("Player no longer in contact");
+		// 		this.hasEnemyContact = false;
+		// 		this.enemyContactTimer = 0;
+		// 	}
+		// }
 
 		this.x += this.velocityX;
 		this.y += this.velocityY;
