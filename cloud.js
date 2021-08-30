@@ -6,7 +6,7 @@ class Cloud extends Sprite{
 
 		super(imgPath,x);
 
-		this.velocityX = -2;
+		this.velocityX = -1.5;
 		this.velocityY = 0;
 	}
 
@@ -18,6 +18,7 @@ class Cloud extends Sprite{
 
 		if(this.x < -this.width*2){
 			this.x = 800;
+			this.y = this.getRandomYPos()/2;
 		}
 
 		this.x += this.velocityX;

@@ -7,7 +7,7 @@ class Tree extends Sprite{
 		super(imgPath,x,y);
 
 	
-		this.velocityX = -5;
+		this.velocityX = -7;
 		this.velocityY = 0;
 	}
 

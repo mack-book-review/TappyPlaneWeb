@@ -48,7 +48,9 @@ class Scene extends BaseScene{
 	}
 
 	drawPlayer(timeDiff){
+		
 		this.player.drawImage(this.context,timeDiff);
+		
 
 	}
 
@@ -74,7 +76,7 @@ class Scene extends BaseScene{
 			this.gameState = "gamewon";
 		}
 
-		if(this.player.health == 0){
+		if(this.player.isDead){
 			this.gameState = "gamelost";
 		}
 	}
@@ -160,7 +162,8 @@ class Scene extends BaseScene{
 
 		if(s1 instanceof Plane && s2 instanceof Enemy && !this.player.enemyContactTimer.timerOn){
 			console.log("Collision with enemy!");
-			this.player.health -= 1;
+
+			this.player.takeDamage();
 			this.player.enemyContactTimer.timerOn = true;
 			
 		} 

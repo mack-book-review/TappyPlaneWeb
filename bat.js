@@ -21,8 +21,9 @@ class Bat extends Enemy{
 
 		super.updatePhysics(timeDiff);
 
-		if(this.x < 0){
+		if(this.x < -this.width){
 			this.x = 700;
+			this.y = this.getRandomYPos();
 		}
 
 		this.x += this.velocityX;

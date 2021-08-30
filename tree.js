@@ -9,7 +9,7 @@ class Tree extends Sprite{
 		super(imgPath,x);
 
 		this.y = 480 - this.height;
-		this.velocityX = -1;
+		this.velocityX = -4;
 		this.velocityY = 0;
 	}
 

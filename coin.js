@@ -24,6 +24,7 @@ class Coin extends Sprite{
 
 		if(this.x < -this.width-50){
 			this.x = 700;
+			this.y = this.getRandomYPos();
 		}
 
 		this.x += this.velocityX;

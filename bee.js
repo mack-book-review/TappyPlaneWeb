@@ -21,8 +21,11 @@ class Bee extends Enemy{
 
 		super.updatePhysics(timeDiff);
 
-		if(this.x < 0){
+		if(this.x < -this.width){
 			this.x = 700;
+			var randY = this.getRandomYPos();
+			console.log("Rand Y: " + randY);
+			this.y = randY;
 		}
 
 		this.x += this.velocityX;

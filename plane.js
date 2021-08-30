@@ -24,6 +24,25 @@ class Plane extends Sprite{
 		// this.enemyContactTimer = 0;
 	}
 
+	takeDamage(){
+
+			if(this.isDead){
+				return;
+			}
+
+			if(this.health > 1){
+				this.health -= 1;
+			} else {
+				this.health = 0;
+				var textures = Animation.GetExplosionTextures();
+				var explosionAnimation = new Animation(textures);
+				explosionAnimation.frameInterval = 100;
+		
+				var currentSprite = this;
+				this.runAnimation(explosionAnimation);
+			}
+		}
+
 
 	processClick(mouseX,mouseY){
 
@@ -42,9 +61,74 @@ class Plane extends Sprite{
 		this.velocityX = 0;
 	}
 
+	drawImage(context,timeDiff){
+			if(this.isDead){
+				return;
+			}
+			
+
+			if(this.currentAnimation == null){
+
+
+				context.drawImage(
+				this.img,
+				0,0,
+				this.img.naturalWidth,this.img.naturalHeight, 
+				this.x,this.y,
+				this.width,this.height);
+
+			} else {
+
+				//run current animation
+				var currentAnimation = this.currentAnimation;
+				
+				currentAnimation.incrementTimeCounter(timeDiff);
+
+				if(currentAnimation.timeCounter > currentAnimation.frameInterval){
+						
+					
+						currentAnimation.resetTimeCounter();
+						currentAnimation.incrementFrameNumber();
+				}
+
+				if(currentAnimation.getCurrentFrame() < currentAnimation.getTextureCount()){
+					
+
+					var currentTexture = currentAnimation.getCurrentTexture();
+							
+					context.drawImage(
+								currentTexture,
+								0,0,
+								currentTexture.naturalWidth,
+								currentTexture.naturalHeight, 
+								this.x,this.y,
+								this.width,this.height);
+				
+				} else if(currentAnimation.autoLoop) {
+					currentAnimation.resetCurrentFrame();
+						
+				} else {
+					currentAnimation.animationFinishCallback();
+					this.currentAnimation = null;
+					this.isDead = true;
+			
+				}
+
+
+
+				
+			}
+			
+		}
 
 	
+	
+
 	updatePhysics(timeDiff){
+
+		if(this.isDead){
+			return;
+		}
 
 		super.updatePhysics(timeDiff);
 
@@ -64,8 +148,11 @@ class Plane extends Sprite{
 		// 	}
 		// }
 
-		this.x += this.velocityX;
-		this.y += this.velocityY;
+	
+			this.x += this.velocityX;
+			this.y += this.velocityY;
+		
+
 	}
 
 }

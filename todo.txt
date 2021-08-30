@@ -10,4 +10,8 @@ Finish the UI (pause button, menu, etc.)
 
 Save game in update function
 
+Add music and sounds effects
+
+Need explosion animation for plane dying
+
 Include an opening menu for selecting plane color

@@ -20,7 +20,7 @@ class Background extends Sprite{
 		this.y = 0;
 		this.width = 640;
 		this.height = 480;
-		this.velocityX = -2;
+		this.velocityX = -1;
 	}
 
 

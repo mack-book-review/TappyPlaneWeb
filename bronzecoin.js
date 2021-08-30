@@ -14,5 +14,16 @@ class BronzeCoin extends Coin{
 
 	}
 
+	updatePhysics(timeDiff){
+
+		super.updatePhysics(timeDiff);
+
+		if(this.x < -this.width){
+			this.y = this.getRandomYPos();
+		}
+
+		this.y += this.velocityY;
+	}
+
 
 }

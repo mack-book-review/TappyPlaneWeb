@@ -26,7 +26,6 @@ class Sprite{
 			
 			//Configure health and dead/alive status
 			this.health = 1;
-			this.isDead = false;
 			this.identifier = Sprite.SpriteIdentifier;
 			Sprite.SpriteIdentifier += 1;
 
@@ -48,6 +47,13 @@ class Sprite{
 		}
 
 		
+		getRandomXPos(){
+			return Math.floor(Math.random()*640) + 1;
+		}
+
+		getRandomYPos(){
+			return Math.floor(Math.random()*480) + 1;
+		}
 
 
 		get boundingRectangle(){
@@ -90,24 +96,7 @@ class Sprite{
 
 		
 
-		takeDamage(){
-
-			if(this.isDead){
-				return;
-			}
-
-			if(this.health > 0){
-				this.health -= 1;
-			} else {
-
-				var textures = Animation.GetExplosionTextures();
-				var explosionAnimation = new Animation(textures);
-				var currentSprite = this;
-				this.runAnimation(explosionAnimation,function(){
-					console.log("Finished running animation");
-				});
-			}
-		}
+		
 
 
 		
@@ -154,6 +143,7 @@ class Sprite{
 
 
 		drawImage(context,timeDiff){
+
 			
 
 			if(this.currentAnimation == null){
@@ -197,9 +187,10 @@ class Sprite{
 					currentAnimation.resetCurrentFrame();
 						
 				} else {
-					delete this.currentAnimation;
+					currentAnimation.animationFinishCallback();
 					this.currentAnimation = null;
-					this.isDead = true;
+					
+			
 				}
 
 

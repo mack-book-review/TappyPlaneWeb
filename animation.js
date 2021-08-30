@@ -3,6 +3,21 @@
 
 
 
+     static GetExplosionTextureImgPaths(){
+         var basePath = "assets/Explosion/regularExplosion";
+         var imgPaths = [];
+         for(var i = 0; i < 9; i++){
+
+             var fullPath = basePath + "0" + i + ".png";
+             imgPaths.push(fullPath);
+         }
+
+
+         return imgPaths;
+     }
+
+
+
      static GetTappyPlaneTextureImgPaths(color = "Blue"){
          var basePath = "assets/Planes/plane" + color;
          var imgPaths = [];
@@ -69,18 +84,7 @@
      }
 
      
-     static GetExplosionTextureImgPaths(){
-
-         var basePath = "assets/RegularExplosion/regularExplosion";
-         var imgPaths = [];
-
-         for(var i = 0; i < 9; i++){
-             var imgPath  = basePath + "0" + i + ".png";
-             imgPaths.push(imgPath);
-         }
-
-         return imgPaths;
-     }
+   
 
       static GetTextures(imgPaths){
          var imgArray = [];
@@ -99,6 +103,12 @@
       static GetBatTextures(){
          var imgPaths = Animation.GetBatTextureImgPaths();
          return Animation.GetTextures(imgPaths);
+     }
+
+
+     static GetExplosionTextures(){
+         var textures = Animation.GetExplosionTextureImgPaths();
+         return Animation.GetTextures(textures);
      }
 
       static GetBeeTextures(){
@@ -167,6 +177,7 @@
          this.frameInterval = 10;
          this.timeCounter = 0;
          this.autoLoop = autoloop;
+         this.animationFinishCallback = function(){};
      }
 
      setAutoloopOn(){
