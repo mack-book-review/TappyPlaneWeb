@@ -6,10 +6,49 @@ class BaseScene{
 		this.context = this.canvas.getContext('2d');
 
 		//Initialize game states
-		this.isPaused = false;
-		this.isLost = false;
-		this.isWon = false;
+		this.gameState = "intro";
+
+		//Start game in intro mode
+		this.showIntroScreen();
+		this.configureCanvasEventListeners();
 ;	}
+
+	showIntroScreen(){
+		this.context.fillStyle = "rgb(50,200,250)";
+		this.context.fillRect(0,0,640,480);
+
+		var img = document.createElement("img");
+		img.src = "assets/HUD/text_ready.png";
+		img.style.position = "absolute";
+		img.style.dislpay = "block";
+		img.style.left = "140px";
+		img.style.top = "150px";
+
+		img.addEventListener("mouseover",function(){
+			
+			img.style.transform = "scale(1.5)";
+			img.style.transition = "transform 3s";
+		});
+
+		img.addEventListener("mouseout",function(){
+			
+			img.style.transform = "scale(1)";
+			img.style.transition = "transform 3s";
+		});
+
+		this.container.appendChild(img);
+
+		var basescene = this;
+		
+		var introHandler = function(){
+			basescene.container.removeChild(img);
+			basescene.gameState = "playing";
+			basescene.container.removeEventListener("click", introHandler);
+
+		};
+
+		this.container.addEventListener("click",introHandler);
+	}
 
 	configureCanvasEventListeners(){
 
@@ -17,21 +56,23 @@ class BaseScene{
 
 			this.canvas.addEventListener("gameresumed", function(){
 				
-				scene.isPaused = false;
-
+				
 		
 			});
 
 			this.canvas.addEventListener("gamepaused", function(){
 				
-				scene.isPaused = true;
 
 		
 			});
 
+			var scene = this;
 			this.canvas.addEventListener("gamewon", function(){
-				
-				scene.isWon = true;
+				console.log("You won!");
+				scene.gameState = "gamewon";
+				var message = document.createElement("div");
+				message.innerHTML = "<p>Level Completed!</p>";
+				scene.container.appendChild(message);
 
 		
 			});
@@ -39,7 +80,12 @@ class BaseScene{
 
 			this.canvas.addEventListener("gamelost", 
 				function(){
-					scene.isLost = true;
+				console.log("You lost!");
+				scene.gameState = "gamelost";
+				var message = document.createElement("div");
+				message.innerHTML = "<p>Level Completed!</p>";
+				scene.container.appendChild(message);
+				
 	
 			});
 
@@ -62,14 +108,23 @@ class BaseScene{
 	}
 
 	updateAnimations(timeDiff){
-		this.drawText("Hello world!")
-;	}
+		if(this.isLost || this.isWon){
+			return;
+		}
+
+	}
 
 	updatePhysics(timeDiff){
+		if(this.isLost || this.isWon){
+			return;
+		}
 		
 	}
 
 	update(timeDiff){
+		if(this.isLost || this.isWon){
+			return;
+		}
 	
 	}
 
@@ -102,24 +157,15 @@ class BaseScene{
 	
 
 	/** Trigger Custom Events for Game Win or Game Loss **/
-	generatePlayerHitEvent(){
-		const event = new CustomEvent('player-hit',{bubbles:true});
-		this.canvasElement.dispatchEvent(event);
-	}
-
-	generateCollectibleEvent(){
-		const event = new CustomEvent('collectible-gained',{bubbles:true});
-		this.canvasElement.dispatchEvent(event);
-	}
 
 	generateGameWinEvent(){
 		const event = new CustomEvent('gamewon',{bubbles:true});
-		this.canvasElement.dispatchEvent(event);
+		this.canvas.dispatchEvent(event);
 	}
 
 	generateGameLossEvent(){
 		const event = new CustomEvent('gamelost',{bubbles:true});
-		this.canvasElement.dispatchEvent(event);
+		this.canvas.dispatchEvent(event);
 	}
 
 }

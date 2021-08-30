@@ -22,29 +22,59 @@ class Game{
            if (previousTimeStamp !== timestamp) {
             // Math.min() is used here to make sure the element stops at exactly 200px
               const elapsed = timestamp - previousTimeStamp;
+              
+              //Show that the game is loading
 
-              scene.clearCanvas();
-              scene.update(elapsed);
-              scene.updateAnimations(elapsed);
-              scene.updatePhysics(elapsed);
+              if(scene.gameState == "intro"){
+
+
+              }
+
+              //Start the game (don't run this code unless game is fully loaded)
+              if(scene.gameState == "playing"){
+                  scene.clearCanvas();
+                  scene.update(elapsed);
+                  scene.updateAnimations(elapsed);
+                  scene.updatePhysics(elapsed);
+                  scene.checkForGameWinOrLoss();
+
+              }
+
+              if(scene.gameState == "paused"){
+               //draw the text on the canvas itself instead of using
+                //the HTML elements
+
+              }
+
+              if(scene.gameState == "gamewon"){
+                console.log("The game has been won!");
+                //draw the text on the canvas itself instead of using
+                //the HTML elements
+              }
+
+              if(scene.gameState == "gamelost"){
+
+                 console.log("The game is lost!");
+                  //draw the text on the canvas itself instead of using
+                //the HTML elements
+
+              }
+
            }
 
 
-           //scene.performCollisionCheck();
-           scene.checkForGameWinOrLoss();
+         
 
     
             
           
             previousTimeStamp = timestamp;
-            if(scene.isPaused || scene.isLost || scene.isWon){
-                console.log("Game stopped");
-            } else {
+         
 
 
-               window.requestAnimationFrame(run);
+            window.requestAnimationFrame(run);
 
-            }
+     
 
   
         }

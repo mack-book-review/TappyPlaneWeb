@@ -3,9 +3,9 @@ class Scene extends BaseScene{
 	constructor(container_id,game_screen_id){
 		super(container_id,game_screen_id);
 
-		this.healthDisplay = this.container.querySelector("#health-display");
-		this.scoreDisplay = this.container.querySelector("#score-display");
-		
+		// this.healthDisplay = this.container.querySelector("#health-display");
+		// this.scoreDisplay = this.container.querySelector("#score-display");
+	
 		this.score = 0;
 
 		this.player = new Plane("Yellow",50,50);
@@ -21,25 +21,14 @@ class Scene extends BaseScene{
 		this.mouseDownY = 0;
 
 		InputHelper.ConfigureCanvasMouseControls(this);
+
+		this.hudManager = new HUDManager(this);
 	}
 
-	updatePlayerHealth(timeDiff){
-		this.healthDisplay.removeChild(this.healthDisplay.childNodes[0]);
-		this.healthDisplay.appendChild(document.createTextNode("Health: " + this.player.health));
 
-	}
-	updateScore(timeDiff){
-		this.scoreDisplay.removeChild(this.scoreDisplay.childNodes[0]);
 
-		this.scoreDisplay.appendChild(document.createTextNode(this.score));
-	}
 
-	update(timeDiff){
-		super.update(timeDiff);
-		this.updatePlayerHealth(timeDiff);
-		this.updateScore(timeDiff);
 
-	}
 
 	/** DRAW FUNCTIONS - CALLED IN updateAnimations **/
 	drawBackgrounds(timeDiff){
@@ -77,7 +66,18 @@ class Scene extends BaseScene{
 		this.coinManager.updatePhysics(timeDiff);
 	}
 
+	update(timeDiff){
+		super.update(timeDiff);
+		this.hudManager.update(timeDiff);
 
+		if(this.player.score == 30){
+			this.gameState = "gamewon";
+		}
+
+		if(this.player.health == 0){
+			this.gameState = "gamelost";
+		}
+	}
 
 	updatePhysics(timeDiff){
 		super.updatePhysics(timeDiff);
@@ -154,6 +154,7 @@ class Scene extends BaseScene{
 			this.processCollision(s1,s2);
 		}
 	}
+
 
 	processCollision(s1,s2){
 

@@ -5,8 +5,8 @@ class CollectibleManager extends SpriteManager{
 		super(context);
 
 		this.sprites = [
-			new GoldCoin(100,100),
-			new SilverCoin(150,200),
+			new GoldCoin(400,300),
+			new SilverCoin(150,400),
 			new BronzeCoin(200,400),
 
 		];
