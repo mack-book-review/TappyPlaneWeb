@@ -79,6 +79,7 @@
 
 		</div>
 	</div>
+	<script src="assetloader.js"></script>
 	<script src="timer.js"></script>
 	<script src="animation.js"></script>
 	<script src="sprite.js"></script>
@@ -104,6 +105,13 @@
 	<script src="inputhelper.js"></script>
 	<script src="game.js"></script>
 	<script>
+		var basePath = "assets/";
+		var loader = new AssetLoader(
+			[],
+			[]
+		);
+
+		//Don't start game until loading is finished
 		var scene = new Scene("game-container","game-screen");
 		var game = new Game(scene);
 		game.start();

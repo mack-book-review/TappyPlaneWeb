@@ -10,6 +10,7 @@ class Game{
 
   start(){
       let start, previousTimeStamp;
+    
       let scene = this.scene;
 
        function run(timestamp) {
@@ -24,6 +25,8 @@ class Game{
               const elapsed = timestamp - previousTimeStamp;
               
               //Show that the game is loading
+
+
 
               if(scene.gameState == "intro"){
 

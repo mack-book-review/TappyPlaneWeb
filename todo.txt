@@ -1,0 +1,13 @@
+Finished the asset preloader
+
+Configure each of the levels with level configuration objects and levelloader
+
+Randomize game objects
+
+Include powerups that make player invincible
+
+Finish the UI (pause button, menu, etc.)
+
+Save game in update function
+
+Include an opening menu for selecting plane color
