@@ -1,11 +1,11 @@
 class Cloud extends Sprite{
 
-	constructor(number, x, y){
+	constructor(number, y){
 		
 		var imgPath =  "assets/BackgroundElements/cloud"+number+".png";
 
-		super(imgPath,x);
-
+		super(imgPath,Math.floor(Math.random()*680));
+		this.y = y;
 		this.velocityX = -1.5;
 		this.velocityY = 0;
 	}

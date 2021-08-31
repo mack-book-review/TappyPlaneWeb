@@ -49,19 +49,19 @@ class Game{
 
               }
 
-              if(scene.gameState == "gamewon"){
-                console.log("The game has been won!");
-                //draw the text on the canvas itself instead of using
-                //the HTML elements
-              }
+              // if(scene.gameState == "gamewon"){
+              //   console.log("The game has been won!");
+              //   //draw the text on the canvas itself instead of using
+              //   //the HTML elements
+              // }
 
-              if(scene.gameState == "gamelost"){
+              // if(scene.gameState == "gamelost"){
 
-                 console.log("The game is lost!");
-                  //draw the text on the canvas itself instead of using
-                //the HTML elements
+              //    console.log("The game is lost!");
+              //     //draw the text on the canvas itself instead of using
+              //   //the HTML elements
 
-              }
+              // }
 
            }
 

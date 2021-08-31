@@ -13,18 +13,25 @@ class Plane extends Sprite{
 
 		this.velocityX = 0;
 		this.velocityY = 0;
-		this.health = 10;
+		this.health = 3;
 		this.coinValue = 0;
+		this.isInvincible = false;
 
 		this.enemyContactTimer = new Timer();
 		this.coinContactTimer = new Timer();
 		this.enemyContactTimer.timeInterval = 2000;
-		// this.hasEnemyContact = false;
-		// this.enemyContactInterval = 500;
-		// this.enemyContactTimer = 0;
+		this.powerupContactTimer = new Timer();
+		this.powerupContactTimer.timeInterval = 2000;
+
+		
 	}
 
 	takeDamage(){
+
+			if(this.isInvincible){
+				console.log("No damage. Invincible!");
+				return;
+			}
 
 			if(this.isDead){
 				return;
@@ -134,6 +141,7 @@ class Plane extends Sprite{
 
 		this.enemyContactTimer.runTimer(timeDiff);
 		this.coinContactTimer.runTimer(timeDiff);
+		this.powerupContactTimer.runTimer(timeDiff);
 
 		// if(this.hasEnemyContact){
 		// 	console.log("Player is in contact...");

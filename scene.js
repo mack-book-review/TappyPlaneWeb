@@ -12,7 +12,11 @@ class Scene extends BaseScene{
 		this.backgroundManager = new BackgroundManager(this.context);
 		this.enemyManager = new EnemyManager(this.context);
 		this.coinManager = new CollectibleManager(this.context);
-	
+		this.letterManager = new LetterManager(this.context);
+		this.powerupManager = new PowerupManager(this.context);
+
+		this.currentWord = "";
+		this.wordProgress = "";
 
 		this.barriers = [];
 
@@ -25,12 +29,55 @@ class Scene extends BaseScene{
 		this.hudManager = new HUDManager(this);
 	}
 
+	/** High-Level Game Loop Hooks **/
+
+	update(timeDiff){
+		super.update(timeDiff);
+		this.hudManager.update(timeDiff);
+
+		if(this.player.coinValue == 5){
+			this.isWon = true;
+		}
+
+		if(this.player.isDead){
+			this.isLost = true;
+		}
+	}
+
+	updatePhysics(timeDiff){
+		super.updatePhysics(timeDiff);
+
+		this.performCollisionCheck();
+
+		this.updateBackgroundPhysics(timeDiff);
+		this.updateEnemyPhysics(timeDiff);
+		this.updateCoinPhysics(timeDiff);
+		this.updatePowerupPhysics(timeDiff);
+
+		if(this.mouseDown){
+			this.player.processClick(this.mouseDownX,this.mouseDownY);
+		} else {
+			this.player.zeroVelocity();
+		}
+
+		this.player.updatePhysics(timeDiff);
+
+	}
+
+	updateAnimations(timeDiff){
+
+		super.updateAnimations(timeDiff);
+
+		this.drawBackgrounds(timeDiff);
+		this.drawCoins(timeDiff);
+		this.drawEnemies(timeDiff);
+		this.drawPowerups(timeDiff);
+		this.drawPlayer(timeDiff);
+	}
 
 
 
-
-
-	/** DRAW FUNCTIONS - CALLED IN updateAnimations **/
+	/** DRAW FUNCTIONS - called in updateAnimations **/
 	drawBackgrounds(timeDiff){
 		this.backgroundManager.drawBackgrounds(timeDiff);
 	}
@@ -39,8 +86,8 @@ class Scene extends BaseScene{
 		this.enemyManager.drawSprites(timeDiff);
 	}
 
-	drawBarriers(timeDiff){
-
+	drawPowerups(timeDiff){
+		this.powerupManager.drawSprites(timeDiff);
 	}
 
 	drawCoins(timeDiff){
@@ -68,66 +115,13 @@ class Scene extends BaseScene{
 		this.coinManager.updatePhysics(timeDiff);
 	}
 
-	update(timeDiff){
-		super.update(timeDiff);
-		this.hudManager.update(timeDiff);
-
-		if(this.player.score == 30){
-			this.gameState = "gamewon";
-		}
-
-		if(this.player.isDead){
-			this.gameState = "gamelost";
-		}
-	}
-
-	updatePhysics(timeDiff){
-		super.updatePhysics(timeDiff);
-
-		this.performCollisionCheck();
-
-		this.updateBackgroundPhysics(timeDiff);
-		this.updateEnemyPhysics(timeDiff);
-		this.updateCoinPhysics(timeDiff);
-
-		if(this.mouseDown){
-			this.player.processClick(this.mouseDownX,this.mouseDownY);
-		} else {
-			this.player.zeroVelocity();
-		}
-
-		this.player.updatePhysics(timeDiff);
-
-	}
-
-	updateAnimations(timeDiff){
-
-		super.updateAnimations(timeDiff);
-
-		this.drawBackgrounds(timeDiff);
-		this.drawCoins(timeDiff);
-		this.drawEnemies(timeDiff);
-		this.drawBarriers(timeDiff);
-		this.drawPlayer(timeDiff);
-;	}
-
-	configureCanvasEventListeners(){
-		super.configureCanvasEventListeners();
-
-			this.canvas.addEventListener("hudupdate", function(event){
-				
-			
-
-			});
-
-			this.canvas.addEventListener("playerupdate", function(event){
-				
-				
-			});
+	updatePowerupPhysics(timeDiff){
+		this.powerupManager.updatePhysics(timeDiff);
 	}
 
 
 
+	/** High-Level Method for Collision Checking - called in game hook **/
 	performCollisionCheck(){
 		var scene = this;
 
@@ -139,17 +133,15 @@ class Scene extends BaseScene{
 			scene.checkCollision(scene.player,coin);
 		});
 
-		// this.iterateCollectibles(function(collectible){
-		// 	scene.checkCollision(scene.player,collectible);
-		// });
+		this.powerupManager.iterateSprites(function(powerup){
+			scene.checkCollision(scene.player,powerup);
+		});
 
-		// this.iterateBarrieres(function(barrier){
-		// 	scene.checkCollision(scene.player,barrier);
-		// });
 	
 	}
 
 
+	/** Helper functions for collision checking **/
 
 	checkCollision(s1,s2){
 		if(s1.hasOverlapWith(s2)){
@@ -174,18 +166,22 @@ class Scene extends BaseScene{
 			this.player.coinValue += s2.value;
 			console.log("Coin Value: " + this.player.coinValue);
 			this.player.coinContactTimer.timerOn = true;
-			//remove the coin
-				//assign each coin a unique identifier upon instantion
-				//use filter function to identify coin in array and get index
-				//use the coinManager to remove the coin
+			
 			this.coinManager.removeSprite(s2);
 		}
 
-		//process collision with collectible
-		//********player's health increases, temporary invulnerability
-	
+		if(s1 instanceof Plane && s2 instanceof Powerup && !this.player.powerupContactTimer.timerOn){
+			console.log("Collision with powerup!");
+			this.player.isInvincible = true;
+			this.player.powerupContactTimer.timerOn = true;
+			this.powerupManager.removeSprite(s2);
+		}
 
-		//process collision with barriers
-		//*********player pushed back, zero x-velocity, health goes down
+		if(!this.player.powerupContactTimer.timerOn){
+			this.player.isInvincible = false;
+
+		}
+
+		
 	}
 }

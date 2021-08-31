@@ -4,9 +4,9 @@ class BackgroundManager{
 		this.context = context;
 
 		this.skyElements = [
-			new Cloud(1,100,0),
-			new Cloud(2,200,0),
-			new Cloud(3,150,0)
+			new Cloud(1,10),
+			new Cloud(2,30),
+			new Cloud(3,15)
 		];
 
 		this.groundElements = [
