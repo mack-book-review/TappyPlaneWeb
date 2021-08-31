@@ -103,7 +103,6 @@ class AssetLoader{
 		"assets/BackgroundElements/grass4.png",
 		"assets/BackgroundElements/grass5.png",
 		"assets/BackgroundElements/grass6.png",
-		"assets/BackgroundElements/grass7.png",
 		"assets/BackgroundElements/groundDirt.png",
 		"assets/BackgroundElements/groundGrass.png",
 		"assets/BackgroundElements/groundIce.png",
@@ -234,8 +233,8 @@ class AssetLoader{
 	];
 
 	static EvilSunURLs = [
-		"assets/Planes/sun1.png",
-		"assets/Planes/sun2.png",
+		"assets/EvilSun/sun1.png",
+		"assets/EvilSun/sun2.png",
 
 	];
 
@@ -310,21 +309,7 @@ class AssetLoader{
 
 	];
 
-	static PlaneURLs = [
-		"assets/Planes/planeBlue1.png",
-		"assets/Planes/planeBlue2.png",
-		"assets/Planes/planeBlue3.png",
-		"assets/Planes/planeGreen1.png",
-		"assets/Planes/planeGreen2.png",
-		"assets/Planes/planeGreen3.png",
-		"assets/Planes/planeRed1.png",
-		"assets/Planes/planeRed2.png",
-		"assets/Planes/planeRed3.png",
-		"assets/Planes/planeYellow1.png",
-		"assets/Planes/planeYellow2.png",
-		"assets/Planes/planeYellow3.png",
 
-	];
 
 	requestImage(url){
 		return this.loadedImages[url];
