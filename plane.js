@@ -13,7 +13,7 @@ class Plane extends Sprite{
 
 		this.velocityX = 0;
 		this.velocityY = 0;
-		this.health = 3;
+		this.health = 10;
 		this.coinValue = 0;
 		this.isInvincible = false;
 
@@ -22,6 +22,8 @@ class Plane extends Sprite{
 		this.enemyContactTimer.timeInterval = 2000;
 		this.powerupContactTimer = new Timer();
 		this.powerupContactTimer.timeInterval = 2000;
+		this.letterContactTimer = new Timer();
+		this.letterContactTimer.timeInterval = 2000;
 
 		
 	}

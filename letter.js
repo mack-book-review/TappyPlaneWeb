@@ -3,12 +3,15 @@ class Letter extends Sprite{
 
 	constructor(letter,x,y){
 
-		var imgPath =  "assets/Letters/letter" + letter + ".png";
+		var imgPath =  "assets/Letters/letter_" + letter + ".png";
 
 		super(imgPath,x,y);
 
 		this.letter = letter;
-		this.velocityX = -Math.floor(Math.random()*10);
+		this.width = 40;
+		this.height = 40;
+
+		this.velocityX = -Math.floor(Math.random()*5);
 		this.velocityY = 0;
 
 		

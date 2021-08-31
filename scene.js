@@ -12,13 +12,18 @@ class Scene extends BaseScene{
 		this.backgroundManager = new BackgroundManager(this.context);
 		this.enemyManager = new EnemyManager(this.context);
 		this.coinManager = new CollectibleManager(this.context);
-		this.letterManager = new LetterManager(this.context);
 		this.powerupManager = new PowerupManager(this.context);
 
-		this.currentWord = "";
-		this.wordProgress = "";
+		this.currentWord = WordGenerator.GET_RANDOM_WORD();
+		this.currentWordArr = Array.from(this.currentWord);
+		this.wordProgress = [];
 
-		this.barriers = [];
+		this.letterManager = new LetterManager(
+			this.context,			//drawing context
+			this.currentWord, 		//the target word that must be spelled
+			5 						//total number of random letters
+		);
+
 
 		this.mouseDown = false;
 		this.mouseDownX = 0;
@@ -35,7 +40,7 @@ class Scene extends BaseScene{
 		super.update(timeDiff);
 		this.hudManager.update(timeDiff);
 
-		if(this.player.coinValue == 5){
+		if(this.player.coinValue == 30){
 			this.isWon = true;
 		}
 
@@ -53,6 +58,7 @@ class Scene extends BaseScene{
 		this.updateEnemyPhysics(timeDiff);
 		this.updateCoinPhysics(timeDiff);
 		this.updatePowerupPhysics(timeDiff);
+		this.updateLetterPhysics(timeDiff);
 
 		if(this.mouseDown){
 			this.player.processClick(this.mouseDownX,this.mouseDownY);
@@ -72,7 +78,9 @@ class Scene extends BaseScene{
 		this.drawCoins(timeDiff);
 		this.drawEnemies(timeDiff);
 		this.drawPowerups(timeDiff);
+		this.drawLetter(timeDiff);
 		this.drawPlayer(timeDiff);
+
 	}
 
 
@@ -97,8 +105,11 @@ class Scene extends BaseScene{
 	drawPlayer(timeDiff){
 		
 		this.player.drawImage(this.context,timeDiff);
-		
+	}
 
+	drawLetter(timeDiff){
+		
+		this.letterManager.drawSprites(this.context,timeDiff);
 	}
 
 	/** updatePhysics functions **/
@@ -119,6 +130,10 @@ class Scene extends BaseScene{
 		this.powerupManager.updatePhysics(timeDiff);
 	}
 
+	updateLetterPhysics(timeDiff){
+		this.letterManager.updatePhysics(timeDiff);
+	}
+
 
 
 	/** High-Level Method for Collision Checking - called in game hook **/
@@ -135,6 +150,10 @@ class Scene extends BaseScene{
 
 		this.powerupManager.iterateSprites(function(powerup){
 			scene.checkCollision(scene.player,powerup);
+		});
+
+		this.letterManager.iterateSprites(function(letter){
+			scene.checkCollision(scene.player,letter);
 		});
 
 	
@@ -179,6 +198,17 @@ class Scene extends BaseScene{
 
 		if(!this.player.powerupContactTimer.timerOn){
 			this.player.isInvincible = false;
+
+		}
+
+		if(s1 instanceof Plane && s2 instanceof Letter && !this.player.letterContactTimer.timerOn){
+			console.log("Collision with letter!");
+
+			var letter = Object.assign(Letter,s2);
+			console.log("Player collided with letter: " + letter.letter);
+
+			this.letterManager.removeSprite(s2);
+			this.player.letterContactTimer.timerOn = true;
 
 		}
 

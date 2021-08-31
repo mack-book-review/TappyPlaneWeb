@@ -3,19 +3,27 @@ class AssetLoader{
 
 	
 
-	static SoundURLs = [];
 
+	static GetSoundURLs(){
+		return [];
+	}
 
-	//use a reduce function
 	static GetImageURLs(){
-		var urls = [];
+		
+
+		var urls = AssetLoader.GetURLCollection().reduce(
+			function(current,nextArray){
+				
+				return current.concat(nextArray);
+			});
 
 
 
 		return urls;
 	}
 
-	static URLCollection = [
+	static GetURLCollection(){ 
+		return [
 		AssetLoader.BackgroundElementURLs,
 		AssetLoader.BackgroundURLs,
 		AssetLoader.BatURLs,
@@ -33,8 +41,50 @@ class AssetLoader{
 		AssetLoader.SpikemanURLs,
 		AssetLoader.SpringmanURLs,
 		AssetLoader.WingmanURLs,
+		AssetLoader.LetterURLs,
+		AssetLoader.PowerupURLs,
 
-	];
+		];
+	}
+
+		static PowerupURLs = [
+		
+			"assets/Carrot/carrot.png",
+			"assets/Carrot/carrot_gold.png",
+
+		];
+
+
+		static LetterURLs = [
+		"assets/Letters/letter_A.png",
+		"assets/Letters/letter_B.png",
+		"assets/Letters/letter_C.png",
+		"assets/Letters/letter_D.png",
+		"assets/Letters/letter_E.png",
+		"assets/Letters/letter_F.png",
+		"assets/Letters/letter_G.png",
+		"assets/Letters/letter_H.png",
+		"assets/Letters/letter_I.png",
+		"assets/Letters/letter_J.png",
+		"assets/Letters/letter_K.png",
+		"assets/Letters/letter_L.png",
+		"assets/Letters/letter_M.png",
+		"assets/Letters/letter_N.png",
+		"assets/Letters/letter_O.png",
+		"assets/Letters/letter_P.png",
+		"assets/Letters/letter_Q.png",
+		"assets/Letters/letter_R.png",
+		"assets/Letters/letter_S.png",
+		"assets/Letters/letter_T.png",
+		"assets/Letters/letter_U.png",
+		"assets/Letters/letter_V.png",
+		"assets/Letters/letter_W.png",
+		"assets/Letters/letter_X.png",
+		"assets/Letters/letter_Y.png",
+		"assets/Letters/letter_Z.png",
+
+		];
+
 
 	static BackgroundElementURLs = [
 		"assets/BackgroundElements/castle_beige.png",
@@ -42,6 +92,7 @@ class AssetLoader{
 		"assets/BackgroundElements/castle_wall.png",
 		"assets/BackgroundElements/cloud1.png",
 		"assets/BackgroundElements/cloud2.png",
+		"assets/BackgroundElements/cloud3.png",
 		"assets/BackgroundElements/cloud4.png",
 		"assets/BackgroundElements/cloud5.png",
 		"assets/BackgroundElements/cloud6.png",
@@ -57,6 +108,62 @@ class AssetLoader{
 		"assets/BackgroundElements/groundGrass.png",
 		"assets/BackgroundElements/groundIce.png",
 		"assets/BackgroundElements/groundRock.png",
+		
+		"assets/BackgroundElements/house_beige_front.png",
+		"assets/BackgroundElements/house_beige_side.png",
+		"assets/BackgroundElements/house_grey_front.png",
+		"assets/BackgroundElements/house_grey_side.png",
+
+		"assets/BackgroundElements/moon_full.png",
+		"assets/BackgroundElements/moon_half.png",
+		"assets/BackgroundElements/piramid.png",
+
+		"assets/BackgroundElements/sun.png",
+		"assets/BackgroundElements/temple.png",
+		"assets/BackgroundElements/tower_beige.png",
+		"assets/BackgroundElements/tower_grey.png",
+
+		"assets/BackgroundElements/tree01.png",
+		"assets/BackgroundElements/tree02.png",
+		"assets/BackgroundElements/tree03.png",
+		"assets/BackgroundElements/tree04.png",
+		"assets/BackgroundElements/tree05.png",
+		"assets/BackgroundElements/tree06.png",
+		"assets/BackgroundElements/tree07.png",
+		"assets/BackgroundElements/tree08.png",
+		"assets/BackgroundElements/tree09.png",
+		"assets/BackgroundElements/tree10.png",
+		"assets/BackgroundElements/tree11.png",
+		"assets/BackgroundElements/tree12.png",
+		"assets/BackgroundElements/tree13.png",
+		"assets/BackgroundElements/tree14.png",
+		"assets/BackgroundElements/tree15.png",
+
+		"assets/BackgroundElements/tree16.png",
+		"assets/BackgroundElements/tree17.png",
+		"assets/BackgroundElements/tree18.png",
+		"assets/BackgroundElements/tree19.png",
+		"assets/BackgroundElements/tree20.png",
+
+		"assets/BackgroundElements/tree21.png",
+		"assets/BackgroundElements/tree22.png",
+		"assets/BackgroundElements/tree23.png",
+		"assets/BackgroundElements/tree24.png",
+
+		"assets/BackgroundElements/tree25.png",
+		"assets/BackgroundElements/tree26.png",
+		"assets/BackgroundElements/tree27.png",
+
+		"assets/BackgroundElements/tree28.png",
+		"assets/BackgroundElements/tree29.png",
+		"assets/BackgroundElements/tree30.png",
+
+		"assets/BackgroundElements/tree31.png",
+		"assets/BackgroundElements/tree32.png",
+		"assets/BackgroundElements/tree33.png",
+
+		"assets/BackgroundElements/tree34.png",
+		"assets/BackgroundElements/tree35.png",
 
 
 	];
@@ -219,9 +326,12 @@ class AssetLoader{
 
 	];
 
+	requestImage(url){
+		return this.loadedImages[url];
+	}
 
-	constructor(image_urls,sound_urls){
-
+	constructor(){
+		this.loadedImages = {};
 		this.loaded = false;
     	this.loadedCount = 0;
     	this.totalCount = 0;
@@ -229,8 +339,8 @@ class AssetLoader{
     	this.configureSoundFileExtension();
 
 
-    	this.loadAllImages(image_urls);
-    	this.loadAllSounds(sound_urls);
+    	this.loadAllImages(AssetLoader.GetImageURLs());
+    	this.loadAllSounds(AssetLoader.GetSoundURLs());
 
     	//show loading progress bar?
     	this.onload = function(){
@@ -246,20 +356,20 @@ class AssetLoader{
 	}
 
 	loadAllImages(urls){
-		for(var i = 0; i < urls.length; i++){
-			this.loadImage(url);
-		}
+		var assetLoader = this;
+		urls.forEach(url => assetLoader.loadImage(url));
+	
 	}
 
 	 loadImage(url){ 
             this.totalCount++;
             this.loaded = false; 
-
             //show loading progress bar here 
 
             var image=new Image(); 
             image.src = url;
-            image.onload = this.itemLoaded; 
+            this.loadedImages[url] = image;
+            image.onload = this.itemLoaded(); 
             return image;
        }
 
@@ -275,11 +385,11 @@ class AssetLoader{
 
        itemLoaded(){
         this.loadedCount++;
-
         //here: configure message for loading progress
         if (this.loadedCount === this.totalCount){
             // Loader has loaded completely.. 
             this.loaded = true;
+            console.log("All items loaded");
             // Hide the loading screen $('#loadingscreen').hide();
             //and call the loader.onload method if it exists
            if(this.onload){

@@ -13,6 +13,9 @@
 </head>
 
 <style>
+
+
+
 	#game-container{
 		position:  absolute;
 		display:  block;
@@ -67,18 +70,49 @@
 		z-index: 11;
 	}
 
+	#start-game-button{
+		position:  relative;
+		text-decoration: none;
+
+		display: block;
+		width:  250px;
+		height: 70px;
+		text-align: center;
+		color: white;
+		font-size: 5em;
+		font-family: "Bangers";
+		background-color: tomato;
+		border-radius: 10%;
+		border:  solid 2px black;
+		color:  white;
+		padding:  1em;
+		padding-bottom: 1em;
+		cursor: pointer;
+	}
+
 
 </style>
-<body>
+<body onload="configureStartButton()">
+
 
 	<div id="game-container">
+
+		
+
 		<canvas id="game-screen" width="640px" height="480px">
+
+			
+
 			
 		</canvas>
 
 
 		</div>
 	</div>
+
+
+
+  
 	<script src="assetloader.js"></script>
 	<script src="timer.js"></script>
 	<script src="animation.js"></script>
@@ -111,16 +145,89 @@
 	<script src="inputhelper.js"></script>
 	<script src="game.js"></script>
 	<script>
-		var basePath = "assets/";
-		var loader = new AssetLoader(
-			[],
-			[]
-		);
+		function loadAssets(){
+			return new AssetLoader();
+		}
+		const ASSET_LOADER = loadAssets();
 
-		//Don't start game until loading is finished
-		var scene = new Scene("game-container","game-screen");
-		var game = new Game(scene);
-		game.start();
+
+		function startGame(){
+				var scene = new Scene("game-container","game-screen");
+				var game = new Game(scene);
+				game.start();
+		}
+	
+
+	startGame();
+
+	</script>
+	<script>
+
+
+
+
+		
+
+		
+
+           // function loadGame(container_id){
+            	// var startButton = document.getElementById("start-game-button");
+
+         
+
+            	//startButton.remove();
+				//Declare the global game settings as a constant
+				//var basePath = "assets/";
+				//var loader = new AssetLoader();
+
+				//Don't start game until loading is finished
+			// 	var scene = new Scene("game-container","game-screen");
+			// 	var game = new Game(scene);
+			// 	game.start();
+			// }
+
+			function configureStartButton(){
+
+			}
+
+            function configureButton(){
+            	var gameScreen = document.getElementById("game-screen");
+
+            	gameScreen.style.display = "hidden";
+
+            	var startButton = document.getElementById("start-game-button");
+
+
+
+            	var endStr = window.location.href.substring(window.location.href.length-2,window.location.href.length);
+
+            	var hash = endStr.substring(0,1);
+            	var level = parseInt(endStr.substring(1,2));
+            	console.log(hash);
+            	console.log(level);
+
+            	if(hash == "#" && hash != undefined && level > 1){
+
+            		startButton.appendChild(document.createTextNode("Continue to Level " + level));
+
+            	} else {
+            		startButton.appendChild(document.createTextNode("Start Game"));
+            	}
+
+    			startButton.addEventListener("click", function(){
+    				gameScreen.style.display = "block";
+    				
+
+    		});
+
+
+
+
+            }
+
+
+
+		
 	</script>
 </body>
 </html>

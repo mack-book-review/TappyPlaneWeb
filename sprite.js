@@ -7,10 +7,9 @@ class Sprite{
 			width = null,
 			height = null){
 
-			//Configure image used for sprite
-			this.img =  new Image();
-			this.img.src = imgSrc;
 
+			this.img = ASSET_LOADER.requestImage(imgSrc);
+			
 			//Configure current animation
 			this.currentAnimation = null;
 
@@ -152,7 +151,8 @@ class Sprite{
 				context.drawImage(
 				this.img,
 				0,0,
-				this.img.naturalWidth,this.img.naturalHeight, 
+				this.img.naturalWidth,
+				this.img.naturalHeight, 
 				this.x,this.y,
 				this.width,this.height);
 
